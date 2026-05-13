@@ -7,11 +7,14 @@ from raw signal analysis to a machine learning classifier that predicts bearing 
 
 ## Key Findings
 Kurtosis and Crest Factor spike before RMS, making them superior early warning indicators.
-Bearing 3 shows classic progressive failure; Bearings 1 and 2 show sudden late-stage degradation.
+Bearing 3 in Test 1 shows classic progressive failure; Bearings 1 and 2 show sudden late-stage degradation.
 The frequency spectrum of the failure bearing shifts from flat and distributed to concentrated
 energy peaks as damage develops.
-A Random Forest classifier trained on Bearings 1 and 2 successfully identifies degradation
-in Bearing 3, a bearing it had never seen during training.
+A Random Forest classifier trained on Test 1 performed well within that test but failed to
+generalize to Tests 2 and 3, scoring AUC values near 0.5 on both; equivalent to random guessing.
+This exposes a core limitation of fixed time-based labeling; the model learns the degradation
+timeline of one specific test rather than the underlying physics of bearing failure.
+This is a known and important challenge in real predictive maintenance systems.
 
 ## Project Structure
 Notebook 1 | Data loading and cleaning
@@ -43,7 +46,9 @@ pip install -r requirements.txt
 # Open notebooks in order in VSCode
 
 ## Next Steps
-Generalize the model to Test 2 and Test 3 datasets.
+Replace the fixed 80|20 time threshold with a data-driven labeling approach,
+flagging degradation when features deviate significantly from each test's own baseline.
+This should improve generalization across tests with different durations and failure patterns.
 
 ## Reference
 Hai Qiu, Jay Lee, Jing Lin, and Gang Yu. "Wavelet Filter-based Weak Signature
